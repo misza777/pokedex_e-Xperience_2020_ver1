@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-// useState - state
-// useEffect - methods of lifecycle
 // import logo from "./logo.svg";
 import { getAllPokemon, getSinglePokemon } from "./services/pokemon";
 import Card from "./components/Card";
 import Navbar from "./components/Navbar";
-import SearchForm from "./components/SearchForm";
+import SimplePagination from "./components/SimplePagination";
+import SearchGenderForm from "./components/SearchGenderForm";
 import "./App.css";
 
 function App() {
@@ -14,10 +13,6 @@ function App() {
   const [nextUrl, setNextUrl] = useState("");
   const [prevUrl, setPrevUrl] = useState("");
   const [loading, setLoading] = useState(true);
-  //search hooks
-
-  // const [pokemonColor, setPokemonColor] = useState("");
-  // const [pokemonType, setPokemonType] = useState("");
 
   const initialUrl = "https://pokeapi.co/api/v2/pokemon";
 
@@ -37,7 +32,7 @@ function App() {
   }, []);
   // [] clean it up only once (on mount and unmount)
 
-  //paginacja i wywolanie fetcha nastepnej storny
+  //paginacja podstawowa i wywolanie fetcha nastepnej storny
   const next = async () => {
     setLoading(true);
     let data = await getAllPokemon(nextUrl);
@@ -60,24 +55,48 @@ function App() {
     setLoading(false);
   };
 
+  //obsluguje wyszukiwanie za pomoca option gender
   const handleSearch = async (gender) => {
     setLoading(true);
+    const pokemonGenderArray = [];
     let data = await getAllPokemon(
       `https://pokeapi.co/api/v2/gender/${gender}/`
     );
     console.log(data);
-
-    // let data1 = await getAllPokemon(
-      // data.pokemon_species_details
-    // );
-
-    // console.log(data1);
-    // await loadingSinglePokemon(data.pokemon_species_details);
+    // 1. wyjecie z json gender nazwy pokemonow i przelozenie do tablicy pokemonGenderArray
+    data.pokemon_species_details.map((pokemon) => {
+      let pokemonName = pokemon.pokemon_species.name;
+      // console.log(pokemonName);
+      pokemonGenderArray.push(pokemonName);
+      return pokemonGenderArray;
+    });
+    console.log(pokemonGenderArray);
+    //2. teraz trzeba to pociac na czesci po 20 szt
+    //na razie wezme pierwsze 20 szt
+    let newPokemonArr = pokemonGenderArray.slice(0, 20);
+    console.log(newPokemonArr);
+    // stworzyc tablice z linkami do funkcji wywolujacej
+    newPokemonArr = newPokemonArr.map(
+      (pokemon) => `https://pokeapi.co/api/v2/pokemon/${pokemon}`
+    );
+    console.log(newPokemonArr);
+    //2. wywolac w funkcji
+    await loadingSearchedPokemon(newPokemonArr);
     setLoading(false);
   };
+  // zdublowana funckja ladujaca pokemony na strone
+  const loadingSearchedPokemon = async (data) => {
+    //niestety mnozymy funkcje :((((
+    let _pokemonData = await Promise.all(
+      data.map(async (pokemon) => {
+        let pokemonRecord = await getSinglePokemon(pokemon);
+        return pokemonRecord;
+      })
+    );
+    setPokemonData(_pokemonData);
+  };
 
-  // teraz musimy wziac tablice tych 20 pokemonow i zrobic nastepnego promisa
-  //przeiterowac kazdy z elementow
+  // funkcja ladujaca pojedyncze pokemony na strone
   const loadingSinglePokemon = async (data) => {
     // console.log(data);
     // promise to all - zwroci promisa jak wszystkie z tych zapytan zostana zwrocone. czyli jak przeiterujemy do konca i wrzucamy to wsyztsko do zmiennej _pokemonData
@@ -102,24 +121,14 @@ function App() {
         <>
           {/* <h1>Data is fetched!</h1> */}
           <Navbar />
-          <SearchForm handleSearch={handleSearch} />
-          <div className="btn">
-            <button onClick={() => prev()}>Prev</button>
-            <button onClick={next}>Next</button>
-          </div>
+          <SearchGenderForm handleSearch={handleSearch} />
+          <SimplePagination next={next} prev={prev} />
           <div className="grid-container">
             {pokemonData.map((pokemon, i) => {
-              // eslint-disable-next-line no-lone-blocks
-              {
-                /* console.log(pokemon); */
-              }
               return <Card key={i} pokemon={pokemon} />;
             })}
           </div>
-          <div className="btn">
-            <button onClick={prev}>Prev</button>
-            <button onClick={next}>Next</button>
-          </div>
+          <SimplePagination next={next} prev={prev} />
         </>
       )}
     </>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SearchForm = ({ handleSearch }) => {
+const SearchGenderForm = ({ handleSearch }) => {
   // hook idzie do komponentu!!!
   const [gender, setGender] = useState("1");
 
@@ -16,6 +16,7 @@ const SearchForm = ({ handleSearch }) => {
           <select
             name="gender"
             id="gender"
+            placeholder="Gender"
             value={gender}
             onChange={(e) => setGender(e.target.value)}
           >
@@ -30,4 +31,4 @@ const SearchForm = ({ handleSearch }) => {
   );
 };
 
-export default SearchForm;
+export default SearchGenderForm;
