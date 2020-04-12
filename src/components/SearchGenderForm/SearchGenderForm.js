@@ -10,7 +10,7 @@ const SearchGenderForm = ({ handleSearch }) => {
   };
 
   return (
-    <div className="search">
+    <div className="search btn">
       <form action="" onSubmit={handleSubmit}>
         <label htmlFor="gender">
           <select

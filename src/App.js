@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 // import logo from "./logo.svg";
 import { getAllPokemon, getSinglePokemon } from "./services/pokemon";
-import Card from "./components/Card";
 import Navbar from "./components/Navbar";
 import SimplePagination from "./components/SimplePagination";
+import AdvancedPagination from "./components/AdvancedPagination";
 import SearchGenderForm from "./components/SearchGenderForm";
+import PokemonContent from "./components/PokemonContent";
 import "./App.css";
 
 function App() {
@@ -13,14 +14,22 @@ function App() {
   const [nextUrl, setNextUrl] = useState("");
   const [prevUrl, setPrevUrl] = useState("");
   const [loading, setLoading] = useState(true);
+  const [searching, setSearching] = useState(false);
+  //pagination
+  const [currentPage, setCurrentPage] = useState(2);
+  const [pokemonPerPage] = useState(20);
+  const [totalPokemons, setTotalPokemons] = useState(0);
+  const [indexOfFirstPokemon, setIndexOfFirstPokemon] = useState(0);
+  const [gender, setGender] = useState(0);
 
   const initialUrl = "https://pokeapi.co/api/v2/pokemon";
 
   // zachowuje sie jak componentdidmount, jak sie zamontuje component to wtedy uruchamiamy useEffect i  fetch data from url
   useEffect(() => {
+    setSearching(false);
     async function fetchData() {
       let response = await getAllPokemon(initialUrl);
-      console.log(response);
+      // console.log(response);
       setNextUrl(response.next);
       setPrevUrl(response.previous);
       // tutaj wyrzuca undefined poniewaz to wynika z async
@@ -30,11 +39,12 @@ function App() {
     }
     fetchData();
   }, []);
-  // [] clean it up only once (on mount and unmount)
+  // [] clean it up only once (on mount and unmount), unikamy zapetlenia renderu never ending loop, uruchamia sie tylko raz
 
   //paginacja podstawowa i wywolanie fetcha nastepnej storny
   const next = async () => {
     setLoading(true);
+    setSearching(false);
     let data = await getAllPokemon(nextUrl);
     // console.log(nextUrl);
     await loadingSinglePokemon(data.results);
@@ -48,6 +58,7 @@ function App() {
   const prev = async () => {
     if (!prevUrl) return;
     setLoading(true);
+    setSearching(false);
     let data = await getAllPokemon(prevUrl);
     await loadingSinglePokemon(data.results);
     setNextUrl(data.next);
@@ -55,14 +66,16 @@ function App() {
     setLoading(false);
   };
 
-  //obsluguje wyszukiwanie za pomoca option gender
+  //obsluguje wyszukiwanie za pomoca search option wg gender
   const handleSearch = async (gender) => {
+    setSearching(true);
     setLoading(true);
+    setGender(gender);
     const pokemonGenderArray = [];
     let data = await getAllPokemon(
       `https://pokeapi.co/api/v2/gender/${gender}/`
     );
-    console.log(data);
+    // console.log(data);
     // 1. wyjecie z json gender nazwy pokemonow i przelozenie do tablicy pokemonGenderArray
     data.pokemon_species_details.map((pokemon) => {
       let pokemonName = pokemon.pokemon_species.name;
@@ -70,18 +83,31 @@ function App() {
       pokemonGenderArray.push(pokemonName);
       return pokemonGenderArray;
     });
-    console.log(pokemonGenderArray);
-    //2. teraz trzeba to pociac na czesci po 20 szt
+    //2. pociac tablice na czesci po 20 szt
     //na razie wezme pierwsze 20 szt
-    let newPokemonArr = pokemonGenderArray.slice(0, 20);
-    console.log(newPokemonArr);
+    // sliceArray();
+    setTotalPokemons(pokemonGenderArray.length);
+    setIndexOfFirstPokemon(currentPage * pokemonPerPage);
+    console.log(totalPokemons);
+    console.log(`indexOfFirstPokemon: ${indexOfFirstPokemon}`);
+    console.log(`pokemonPerPage: ${pokemonPerPage}`);
+
+    console.log(pokemonGenderArray);
+    console.log(pokemonGenderArray.length);
+    let currentPokemonArr = pokemonGenderArray.slice(
+      indexOfFirstPokemon,
+      pokemonPerPage
+    );
+    console.log(currentPokemonArr);
     // stworzyc tablice z linkami do funkcji wywolujacej
-    newPokemonArr = newPokemonArr.map(
+    currentPokemonArr = currentPokemonArr.map(
       (pokemon) => `https://pokeapi.co/api/v2/pokemon/${pokemon}`
     );
-    console.log(newPokemonArr);
+    console.log(currentPokemonArr);
+    // setPokemonFinalArr(currentPokemonArr);
+    // console.log(pokemonFinalArr);
     //2. wywolac w funkcji
-    await loadingSearchedPokemon(newPokemonArr);
+    await loadingSearchedPokemon(currentPokemonArr);
     setLoading(false);
   };
   // zdublowana funckja ladujaca pokemony na strone
@@ -113,24 +139,28 @@ function App() {
     setPokemonData(_pokemonData);
   };
 
+  //change page in pagination, przekazanyz klikniecia pageNumber w advpag to jest zmienna number
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    console.log(`pageNumber: ${pageNumber}`);
+    handleSearch(gender);
+  };
+
   return (
     <>
-      {loading ? (
-        <h1>Loading...</h1>
+      <Navbar />
+      <SearchGenderForm handleSearch={handleSearch} />
+      {searching ? (
+        <AdvancedPagination
+          pokemonPerPage={pokemonPerPage}
+          totalPokemons={totalPokemons}
+          paginate={paginate}
+        />
       ) : (
-        <>
-          {/* <h1>Data is fetched!</h1> */}
-          <Navbar />
-          <SearchGenderForm handleSearch={handleSearch} />
-          <SimplePagination next={next} prev={prev} />
-          <div className="grid-container">
-            {pokemonData.map((pokemon, i) => {
-              return <Card key={i} pokemon={pokemon} />;
-            })}
-          </div>
-          <SimplePagination next={next} prev={prev} />
-        </>
+        <SimplePagination next={next} prev={prev} />
       )}
+      <PokemonContent pokemonData={pokemonData} loading={loading} />
+      <SimplePagination next={next} prev={prev} />
     </>
   );
 }
