@@ -29,8 +29,17 @@
   text-decoration: none;
 }
 
+.btn li {
+  margin-top: 15px;
+}
+
 .btn select {
   font-size: 1em;
   margin-right: 10px;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
 
 }

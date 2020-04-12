@@ -16,10 +16,10 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [searching, setSearching] = useState(false);
   //pagination
-  const [currentPage, setCurrentPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(1);
   const [pokemonPerPage] = useState(20);
   const [totalPokemons, setTotalPokemons] = useState(0);
-  const [indexOfFirstPokemon, setIndexOfFirstPokemon] = useState(0);
+  // const [indexOfFirstPokemon, setIndexOfFirstPokemon] = useState(0);
   const [gender, setGender] = useState(0);
 
   const initialUrl = "https://pokeapi.co/api/v2/pokemon";
@@ -75,7 +75,6 @@ function App() {
     let data = await getAllPokemon(
       `https://pokeapi.co/api/v2/gender/${gender}/`
     );
-    // console.log(data);
     // 1. wyjecie z json gender nazwy pokemonow i przelozenie do tablicy pokemonGenderArray
     data.pokemon_species_details.map((pokemon) => {
       let pokemonName = pokemon.pokemon_species.name;
@@ -83,34 +82,31 @@ function App() {
       pokemonGenderArray.push(pokemonName);
       return pokemonGenderArray;
     });
-    //2. pociac tablice na czesci po 20 szt
-    //na razie wezme pierwsze 20 szt
-    // sliceArray();
     setTotalPokemons(pokemonGenderArray.length);
-    setIndexOfFirstPokemon(currentPage * pokemonPerPage);
-    console.log(totalPokemons);
-    console.log(`indexOfFirstPokemon: ${indexOfFirstPokemon}`);
-    console.log(`pokemonPerPage: ${pokemonPerPage}`);
 
-    console.log(pokemonGenderArray);
-    console.log(pokemonGenderArray.length);
-    let currentPokemonArr = pokemonGenderArray.slice(
-      indexOfFirstPokemon,
-      pokemonPerPage
-    );
+    //2. pociac tablice na czesci po 20 szt funkcja chunk
+    let chunked_arr = chunk(pokemonGenderArray, pokemonPerPage);
+    console.log(chunked_arr);
+    // 3. dopasowac nr kliknietej strony do odpowiedniej tablicy - i tu jest problem - nie chce sie dopasowac!
+
+    console.log(`currentPage: ${currentPage}`);
+    //UWAGA tutaj jest problem, currentPage nie chce sie uaktualnic currentPage mimo ze kliknieta paginacja - jak to zrobic?
+    // a w tym miejscu potrzebna jest aktualna kliknieta wartosc currentPage
+    let currentPokemonArr = chunked_arr[currentPage - 1];
+
     console.log(currentPokemonArr);
-    // stworzyc tablice z linkami do funkcji wywolujacej
+
+    // 1a. stworzyc tablice z linkami do funkcji wywolujacej
     currentPokemonArr = currentPokemonArr.map(
       (pokemon) => `https://pokeapi.co/api/v2/pokemon/${pokemon}`
     );
-    console.log(currentPokemonArr);
-    // setPokemonFinalArr(currentPokemonArr);
-    // console.log(pokemonFinalArr);
-    //2. wywolac w funkcji
+
+    //2a. wywolac w funkcji
+
     await loadingSearchedPokemon(currentPokemonArr);
     setLoading(false);
   };
-  // zdublowana funckja ladujaca pokemony na strone
+  // zdublowana funckja ladujaca pokemony na strone, warto by to ujednolicic
   const loadingSearchedPokemon = async (data) => {
     //niestety mnozymy funkcje :((((
     let _pokemonData = await Promise.all(
@@ -122,7 +118,7 @@ function App() {
     setPokemonData(_pokemonData);
   };
 
-  // funkcja ladujaca pojedyncze pokemony na strone
+  // funkcja ladujaca pojedyncze pokemony na strone główną
   const loadingSinglePokemon = async (data) => {
     // console.log(data);
     // promise to all - zwroci promisa jak wszystkie z tych zapytan zostana zwrocone. czyli jak przeiterujemy do konca i wrzucamy to wsyztsko do zmiennej _pokemonData
@@ -139,12 +135,23 @@ function App() {
     setPokemonData(_pokemonData);
   };
 
-  //change page in pagination, przekazanyz klikniecia pageNumber w advpag to jest zmienna number
+  //change page in pagination, przekazanyz klikniecia pageNumber w AdvancedPagination to jest zmienna number
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
     console.log(`pageNumber: ${pageNumber}`);
     handleSearch(gender);
   };
+
+  // unkcja krojaca tablice
+  function chunk(array, size) {
+    const chunked_arr = [];
+    let index = 0;
+    while (index < array.length) {
+      chunked_arr.push(array.slice(index, size + index));
+      index += size;
+    }
+    return chunked_arr;
+  }
 
   return (
     <>

@@ -5,12 +5,12 @@ const AdvancedPagination = ({ pokemonPerPage, totalPokemons, paginate }) => {
   for (let i = 1; i <= Math.ceil(totalPokemons / pokemonPerPage); i++) {
     pageNumbers.push(i);
   }
-  console.log(totalPokemons);
-  console.log(pokemonPerPage);
+  console.log(`totalPokemons: ${totalPokemons}`);
+  console.log(`pokemonPerPage: ${pokemonPerPage}`);
 
   return (
     <nav>
-      <ul className="btn">
+      <ul className="btn pagination">
         {pageNumbers.map((number) => (
           <li key={number}>
             <a onClick={() => paginate(number)} href="!#">
