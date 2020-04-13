@@ -1,5 +1,6 @@
 import React from "react";
 import "./Card.css";
+// import no-data from "./no-data.png";
 // import kolorow wlasciwosci
 import pokemonColorTypes from "../../helpers/pokemonColorTypes";
 
@@ -12,6 +13,7 @@ const Card = (props) => {
       <div className="Card__img">
         <div className="Card__img--normal">
           <img src={pokemon.sprites.front_default} alt="pokemon_front_image" />
+          {/* <img src={} alt="pokemon_front_image" /> */}
           <img src={pokemon.sprites.back_default} alt="pokemon_back_image" />
         </div>
 
@@ -35,7 +37,9 @@ const Card = (props) => {
             <div
               className="Card__type"
               key={i}
-              style={{ backgroundColor: pokemonColorTypes[typeArr.type.name] }}
+              style={{
+                backgroundColor: pokemonColorTypes[typeArr.type.name],
+              }}
             >
               {typeArr.type.name}
             </div>

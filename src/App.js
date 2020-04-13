@@ -32,8 +32,6 @@ function App() {
       // console.log(response);
       setNextUrl(response.next);
       setPrevUrl(response.previous);
-      // tutaj wyrzuca undefined poniewaz to wynika z async
-      // wczesniejszy zapis
       await loadingSinglePokemon(response.results);
       setLoading(false);
     }
@@ -108,14 +106,17 @@ function App() {
   };
   // zdublowana funckja ladujaca pokemony na strone, warto by to ujednolicic
   const loadingSearchedPokemon = async (data) => {
-    //niestety mnozymy funkcje :((((
+    //niestety mnoze funkcje :(
     let _pokemonData = await Promise.all(
       data.map(async (pokemon) => {
         let pokemonRecord = await getSinglePokemon(pokemon);
+        console.log(pokemonRecord);
         return pokemonRecord;
       })
     );
+    console.log(`pokemonData: ${pokemonData}`);
     setPokemonData(_pokemonData);
+    console.log(`pokemonData: ${pokemonData}`);
   };
 
   // funkcja ladujaca pojedyncze pokemony na strone główną
@@ -137,9 +138,9 @@ function App() {
 
   //change page in pagination, przekazanyz klikniecia pageNumber w AdvancedPagination to jest zmienna number
   const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
     console.log(`pageNumber: ${pageNumber}`);
     handleSearch(gender);
+    setCurrentPage(pageNumber);
   };
 
   // unkcja krojaca tablice
