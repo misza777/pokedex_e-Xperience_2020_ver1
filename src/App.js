@@ -39,6 +39,10 @@ function App() {
   }, []);
   // [] clean it up only once (on mount and unmount), unikamy zapetlenia renderu never ending loop, uruchamia sie tylko raz
 
+  // useEffect(({
+
+  // }),[]
+  // );
   //paginacja podstawowa i wywolanie fetcha nastepnej storny
   const next = async () => {
     setLoading(true);
@@ -76,7 +80,6 @@ function App() {
     // 1. wyjecie z json gender nazwy pokemonow i przelozenie do tablicy pokemonGenderArray
     data.pokemon_species_details.map((pokemon) => {
       let pokemonName = pokemon.pokemon_species.name;
-      // console.log(pokemonName);
       pokemonGenderArray.push(pokemonName);
       return pokemonGenderArray;
     });
@@ -84,16 +87,11 @@ function App() {
 
     //2. pociac tablice na czesci po 20 szt funkcja chunk
     let chunked_arr = chunk(pokemonGenderArray, pokemonPerPage);
-    console.log(chunked_arr);
-    // 3. dopasowac nr kliknietej strony do odpowiedniej tablicy - i tu jest problem - nie chce sie dopasowac!
+    // 3. dopasowac nr kliknietej strony do odpowiedniej tablicy - i tu jest problem - nie chce sie dopasowac setCurrenPage!
 
     console.log(`currentPage: ${currentPage}`);
     //UWAGA tutaj jest problem, currentPage nie chce sie uaktualnic currentPage mimo ze kliknieta paginacja - jak to zrobic?
-    // a w tym miejscu potrzebna jest aktualna kliknieta wartosc currentPage
     let currentPokemonArr = chunked_arr[currentPage - 1];
-
-    console.log(currentPokemonArr);
-
     // 1a. stworzyc tablice z linkami do funkcji wywolujacej
     currentPokemonArr = currentPokemonArr.map(
       (pokemon) => `https://pokeapi.co/api/v2/pokemon/${pokemon}`
@@ -104,19 +102,17 @@ function App() {
     await loadingSearchedPokemon(currentPokemonArr);
     setLoading(false);
   };
+
   // zdublowana funckja ladujaca pokemony na strone, warto by to ujednolicic
   const loadingSearchedPokemon = async (data) => {
     //niestety mnoze funkcje :(
     let _pokemonData = await Promise.all(
       data.map(async (pokemon) => {
         let pokemonRecord = await getSinglePokemon(pokemon);
-        console.log(pokemonRecord);
         return pokemonRecord;
       })
     );
-    console.log(`pokemonData: ${pokemonData}`);
     setPokemonData(_pokemonData);
-    console.log(`pokemonData: ${pokemonData}`);
   };
 
   // funkcja ladujaca pojedyncze pokemony na strone główną

@@ -1,6 +1,6 @@
 import React from "react";
 import "./Card.css";
-// import no-data from "./no-data.png";
+// import nodata from '/../../public/nodata.png';
 // import kolorow wlasciwosci
 import pokemonColorTypes from "../../helpers/pokemonColorTypes";
 
@@ -8,27 +8,37 @@ const Card = (props) => {
   // mozesz tez napisac zamiast props {pokemon}
   const { pokemon } = props;
   // jak mamyobiekt to jest prosciej jak tablice to iterujemy lub przekazujemy indexy
+  let pokemonFoto = pokemon.sprites.front_default;
+
   return (
     <div className="Card">
-      <div className="Card__img">
-        <div className="Card__img--normal">
-          <img src={pokemon.sprites.front_default} alt="pokemon_front_image" />
-          {/* <img src={} alt="pokemon_front_image" /> */}
-          <img src={pokemon.sprites.back_default} alt="pokemon_back_image" />
-        </div>
+      {pokemonFoto ? (
+        <div className="Card__img">
+          <div className="Card__img--normal">
+            <img
+              src={pokemon.sprites.front_default}
+              alt="pokemon_front_image"
+            />
+            <img src={pokemon.sprites.back_default} alt="pokemon_back_image" />
+          </div>
 
-        <div className="Card__img--shiny">
-          <img
-            src={pokemon.sprites.front_shiny}
-            alt="pokemon_front__shiny_image"
-          />
-          <img
-            src={pokemon.sprites.back_shiny}
-            alt="pokemon_back_shiny_image"
-          />
+          <div className="Card__img--shiny">
+            <img
+              src={pokemon.sprites.front_shiny}
+              alt="pokemon_front__shiny_image"
+            />
+            <img
+              src={pokemon.sprites.back_shiny}
+              alt="pokemon_back_shiny_image"
+            />
+          </div>
         </div>
-      </div>
-      {/* nazwa i typy */}
+      ) : (
+        <div className="Card__img">
+        <img className="nologo" src={"/nodata.png"} alt="no-data_image" />
+        </div>
+      )}
+      ;{/* nazwa i typy */}
       <div className="Card__name">{pokemon.name}</div>
       <p className="Card__type__title">Type:</p>
       <div className="Card__types">
@@ -53,14 +63,12 @@ const Card = (props) => {
           <p className="Card__data--value">{pokemon.weight}</p>
         </div>
       </div>
-
       <div className="Card__info">
         <div className="Card__data">
           <p className="title">Height</p>
           <p className="Card__data--value">{pokemon.height}</p>
         </div>
       </div>
-
       <div className="Card__info">
         <div className="Card__data">
           <p className="title">Ability</p>

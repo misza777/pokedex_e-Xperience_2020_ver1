@@ -49,7 +49,6 @@ export async function getSinglePokemon(url) {
     fetch(url)
       .then((response) => {
         if (response.ok) {
-          // json, odwrotnie stringify lub toString
           return response.json();
         }
         return emptyJson;

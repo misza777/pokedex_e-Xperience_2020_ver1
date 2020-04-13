@@ -5,8 +5,6 @@ const AdvancedPagination = ({ pokemonPerPage, totalPokemons, paginate }) => {
   for (let i = 1; i <= Math.ceil(totalPokemons / pokemonPerPage); i++) {
     pageNumbers.push(i);
   }
-  console.log(`totalPokemons: ${totalPokemons}`);
-  console.log(`pokemonPerPage: ${pokemonPerPage}`);
 
   return (
     <nav>
