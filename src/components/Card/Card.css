@@ -4,18 +4,40 @@ p {
 
 .Card {
     background: grey;
+    flex-direction: column;
     border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .Card__img {
     display: flex;
     flex-wrap: wrap;
-    /* text-align: center; */
+    align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+
+.showBtn {
+    border-style: none;
+    padding: 5px 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    background: darkcyan;
+    color: #fff;
+    font-size: .7em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.showBtn:hover {
+    background: black;
+    color: orange;
 }
 
 .nologo {
-    margin-top: 20px;
+    margin-top: 30px;
     height: 100px;
     width: 100px;
 }

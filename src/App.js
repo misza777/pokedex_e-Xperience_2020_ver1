@@ -39,10 +39,6 @@ function App() {
   }, []);
   // [] clean it up only once (on mount and unmount), unikamy zapetlenia renderu never ending loop, uruchamia sie tylko raz
 
-  // useEffect(({
-
-  // }),[]
-  // );
   //paginacja podstawowa i wywolanie fetcha nastepnej storny
   const next = async () => {
     setLoading(true);

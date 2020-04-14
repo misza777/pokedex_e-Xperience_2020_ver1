@@ -1,44 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Card.css";
-// import nodata from '/../../public/nodata.png';
 // import kolorow wlasciwosci
 import pokemonColorTypes from "../../helpers/pokemonColorTypes";
 
 const Card = (props) => {
   // mozesz tez napisac zamiast props {pokemon}
+  const [active, setActive] = useState(false);
+
   const { pokemon } = props;
   // jak mamyobiekt to jest prosciej jak tablice to iterujemy lub przekazujemy indexy
-  let pokemonFoto = pokemon.sprites.front_default;
+  const pokemonFrontFoto = pokemon.sprites.front_default;
+  const pokemonBackFoto = pokemon.sprites.back_default;
+  const pokemonBackShinyFoto = pokemon.sprites.back_shiny;
+
+  const showElement = () => {
+    setActive(!active);
+  };
 
   return (
     <div className="Card">
-      {pokemonFoto ? (
+      {pokemonFrontFoto ? (
         <div className="Card__img">
           <div className="Card__img--normal">
             <img
               src={pokemon.sprites.front_default}
               alt="pokemon_front_image"
             />
-            <img src={pokemon.sprites.back_default} alt="pokemon_back_image" />
+            {pokemonBackFoto ? (
+              <img
+                src={pokemon.sprites.back_default}
+                alt="pokemon_back_image"
+              />
+            ) : null}
           </div>
-
-          <div className="Card__img--shiny">
-            <img
-              src={pokemon.sprites.front_shiny}
-              alt="pokemon_front__shiny_image"
-            />
-            <img
-              src={pokemon.sprites.back_shiny}
-              alt="pokemon_back_shiny_image"
-            />
-          </div>
+          <button className="showBtn" onClick={showElement}>
+            {active ? "hide shiny version" : "show shiny version"}
+          </button>
+          {active ? (
+            <div className="Card__img--shiny">
+              <img
+                src={pokemon.sprites.front_shiny}
+                alt="pokemon_front__shiny_image"
+              />
+              {pokemonBackShinyFoto ? (
+                <img
+                  src={pokemon.sprites.back_shiny}
+                  alt="pokemon_back_shiny_image"
+                />
+              ) : null}
+            </div>
+          ) : null}
         </div>
       ) : (
         <div className="Card__img">
-        <img className="nologo" src={"/nodata.png"} alt="no-data_image" />
+          <img className="nologo" src={"/nodata.png"} alt="nodata_image" />
         </div>
       )}
-      ;{/* nazwa i typy */}
+      {/* nazwa i typy */}
       <div className="Card__name">{pokemon.name}</div>
       <p className="Card__type__title">Type:</p>
       <div className="Card__types">
