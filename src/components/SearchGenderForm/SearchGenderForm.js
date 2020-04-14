@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-const SearchGenderForm = ({ handleSearch }) => {
-  // hook idzie do komponentu!!!
+const SearchGenderForm = ({ handleGenderSearch }) => {
+  //hook
   const [gender, setGender] = useState("1");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleSearch(gender);
+    handleGenderSearch(gender);
   };
 
   return (

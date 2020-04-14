@@ -4,7 +4,7 @@ import { getAllPokemon, getSinglePokemon } from "./services/pokemon";
 import Navbar from "./components/Navbar";
 import SimplePagination from "./components/SimplePagination";
 import AdvancedPagination from "./components/AdvancedPagination";
-import SearchGenderForm from "./components/SearchGenderForm";
+// import SearchGenderForm from "./components/SearchGenderForm";
 import PokemonContent from "./components/PokemonContent";
 import "./App.css";
 
@@ -65,7 +65,7 @@ function App() {
   };
 
   //obsluguje wyszukiwanie za pomoca search option wg gender
-  const handleSearch = async (gender) => {
+  const handleGenderSearch = async (gender) => {
     setSearching(true);
     setLoading(true);
     setGender(gender);
@@ -131,7 +131,7 @@ function App() {
   //change page in pagination, przekazanyz klikniecia pageNumber w AdvancedPagination to jest zmienna number
   const paginate = (pageNumber) => {
     console.log(`pageNumber: ${pageNumber}`);
-    handleSearch(gender);
+    handleGenderSearch(gender);
     setCurrentPage(pageNumber);
   };
 
@@ -148,8 +148,8 @@ function App() {
 
   return (
     <>
-      <Navbar />
-      <SearchGenderForm handleSearch={handleSearch} />
+      <Navbar handleGenderSearch={handleGenderSearch} />
+      {/* <SearchGenderForm handleSearch={handleSearch} /> */}
       {searching ? (
         <AdvancedPagination
           pokemonPerPage={pokemonPerPage}
@@ -168,4 +168,6 @@ function App() {
 export default App;
 
 // inspiracja:
+//TraversyMedia
 // https://github.com/rivera1294/pokemon/tree/master/src
+//stackoverflow
