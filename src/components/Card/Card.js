@@ -53,7 +53,11 @@ const Card = (props) => {
         </div>
       ) : (
         <div className="Card__img">
-          <img className="nologo" src={"/nodata.png"} alt="nodata_image" />
+          <img
+            className="nologo"
+            src={process.env.PUBLIC_URL + "/nodata.png"}
+            alt="nodata_image"
+          />
         </div>
       )}
       {/* nazwa i typy */}
