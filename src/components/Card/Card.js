@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Card.css";
 // import kolorow wlasciwosci
 import pokemonColorTypes from "../../helpers/pokemonColorTypes";
+import nodata from "../../img/nodata.png";
 
 const Card = (props) => {
   // mozesz tez napisac zamiast props {pokemon}
@@ -55,7 +56,8 @@ const Card = (props) => {
         <div className="Card__img">
           <img
             className="nologo"
-            src={process.env.PUBLIC_URL + "/nodata.png"}
+            // src={process.env.PUBLIC_URL + "/nodata.png"}
+            src={nodata}
             alt="nodata_image"
           />
         </div>
