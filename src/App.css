@@ -1,4 +1,6 @@
 * {
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
 }
 
@@ -27,6 +29,14 @@
   color: #fff;
   font-size: 1em;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.btn button:hover,
+.btn li>a:hover {
+  color: orange;
+  background-color: black;
+  border: 1px solid orange;
 }
 
 .btn li {

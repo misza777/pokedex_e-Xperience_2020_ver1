@@ -21,6 +21,7 @@ function App() {
   const [totalPokemons, setTotalPokemons] = useState(0);
   // const [indexOfFirstPokemon, setIndexOfFirstPokemon] = useState(0);
   const [gender, setGender] = useState(0);
+  let pageNumber = 1;
 
   const initialUrl = "https://pokeapi.co/api/v2/pokemon";
 
@@ -64,6 +65,22 @@ function App() {
     setLoading(false);
   };
 
+  const initial = async () => {
+    setSearching(false);
+    async function fetchData() {
+      let response = await getAllPokemon(initialUrl);
+      setNextUrl(response.next);
+      setPrevUrl(response.previous);
+      await loadingSinglePokemon(response.results);
+      setLoading(false);
+    }
+    fetchData();
+  };
+
+  const handleNameSearch = async (name) => {
+    console.log(name);
+  };
+
   //obsluguje wyszukiwanie za pomoca search option wg gender
   const handleGenderSearch = async (gender) => {
     setSearching(true);
@@ -94,7 +111,6 @@ function App() {
     );
 
     //2a. wywolac w funkcji
-
     await loadingSearchedPokemon(currentPokemonArr);
     setLoading(false);
   };
@@ -148,8 +164,11 @@ function App() {
 
   return (
     <>
-      <Navbar handleGenderSearch={handleGenderSearch} />
-      {/* <SearchGenderForm handleSearch={handleSearch} /> */}
+      <Navbar
+        handleGenderSearch={handleGenderSearch}
+        handleNameSearch={handleNameSearch}
+        initial={initial}
+      />
       {searching ? (
         <AdvancedPagination
           pokemonPerPage={pokemonPerPage}
@@ -160,7 +179,15 @@ function App() {
         <SimplePagination next={next} prev={prev} />
       )}
       <PokemonContent pokemonData={pokemonData} loading={loading} />
-      <SimplePagination next={next} prev={prev} />
+      {searching ? (
+        <AdvancedPagination
+          pokemonPerPage={pokemonPerPage}
+          totalPokemons={totalPokemons}
+          paginate={paginate}
+        />
+      ) : (
+        <SimplePagination next={next} prev={prev} />
+      )}
     </>
   );
 }

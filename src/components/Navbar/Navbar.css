@@ -1,6 +1,6 @@
 .Navbar {
     display: flex;
-    /* justify-content: center; */
+    justify-content: space-between;
     align-items: center;
     padding: 20px;
     background: red;
@@ -8,11 +8,75 @@
     margin-bottom: 20px;
     font-size: 2rem;
     font-weight: 500;
+    padding: .6% 15%;
 }
 
-.Navbar img {
+.pokemon__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.pokemon__logo-img {
     margin: 0 10px;
     width: 100px;
     height: 100px;
+}
 
+.navbar__menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.search__container {
+    position: relative;
+}
+
+.search__form {
+    font-size: 1.6rem;
+}
+
+.form__btn,
+.search__form-input {
+    font-size: 1.2rem;
+}
+
+.form__btn {
+    border-style: none;
+    padding: 5px 10px;
+    margin: 5px 0 5px 10px;
+    border-radius: 5px;
+    background: #30a7d7;
+    color: #fff;
+    font-size: .8em;
+    text-decoration: none;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.form__btn:hover {
+    color: orange;
+    background-color: black;
+    border: 1px solid orange;
+}
+
+.icon {
+    margin: 7px 10px 0 10px;
+    color: black;
+    transition: 0.3s;
+}
+
+.icon:hover {
+    cursor: pointer;
+    color: grey;
+}
+
+.iconSearch {
+    position: absolute;
+    left: -35px;
+    top: 10px;
+    font-size: 1.4rem;
+    color: black;
+    transition: 0.3s;
 }

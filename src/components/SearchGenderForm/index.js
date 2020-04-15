@@ -1,3 +1,3 @@
-import SearchForm from "./SearchGenderForm";
+import SearchGenderForm from "./SearchGenderForm";
 
-export default SearchForm;
+export default SearchGenderForm;
