@@ -21,8 +21,6 @@ function App() {
   const [totalPokemons, setTotalPokemons] = useState(0);
   // const [indexOfFirstPokemon, setIndexOfFirstPokemon] = useState(0);
   const [gender, setGender] = useState(0);
-  let pageNumber = 1;
-
   const initialUrl = "https://pokeapi.co/api/v2/pokemon";
 
   // zachowuje sie jak componentdidmount, jak sie zamontuje component to wtedy uruchamiamy useEffect i  fetch data from url
@@ -76,9 +74,14 @@ function App() {
     }
     fetchData();
   };
-
+  //obsluguje wyszukiwanie wg nazwy lub numeru id
   const handleNameSearch = async (name) => {
-    console.log(name);
+    setSearching(true);
+    const currentUrl = `${initialUrl}/${name}`;
+    let _pokemonData = await getSinglePokemon(currentUrl);
+    // przy pojedynczym obiekcie trzeba przekształcić w tablicę
+    _pokemonData = new Array(_pokemonData);
+    setPokemonData(_pokemonData);
   };
 
   //obsluguje wyszukiwanie za pomoca search option wg gender
@@ -151,7 +154,7 @@ function App() {
     setCurrentPage(pageNumber);
   };
 
-  // unkcja krojaca tablice
+  // funkcja krojaca tablice
   function chunk(array, size) {
     const chunked_arr = [];
     let index = 0;

@@ -58,7 +58,6 @@
 .form__btn:hover {
     color: orange;
     background-color: black;
-    border: 1px solid orange;
 }
 
 .icon {

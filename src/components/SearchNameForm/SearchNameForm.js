@@ -8,6 +8,7 @@ const SearchNameForm = ({ handleNameSearch }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleNameSearch(name);
+    setName("");
   };
 
   return (
@@ -21,7 +22,7 @@ const SearchNameForm = ({ handleNameSearch }) => {
           name="name"
           id="name"
           type="text"
-          placeholder=" type Name or Id"
+          placeholder=" type Name or Id number"
           value={name}
           onChange={(e) => setName(e.target.value)}
         ></input>
