@@ -1,22 +1,24 @@
 {
   "files": {
-    "main.css": "/pokedex_e-Xperience_2020_ver1/static/css/main.3c25ad0b.chunk.css",
-    "main.js": "/pokedex_e-Xperience_2020_ver1/static/js/main.ecc6e683.chunk.js",
-    "main.js.map": "/pokedex_e-Xperience_2020_ver1/static/js/main.ecc6e683.chunk.js.map",
+    "main.css": "/pokedex_e-Xperience_2020_ver1/static/css/main.eefcbc83.chunk.css",
+    "main.js": "/pokedex_e-Xperience_2020_ver1/static/js/main.49d928ba.chunk.js",
+    "main.js.map": "/pokedex_e-Xperience_2020_ver1/static/js/main.49d928ba.chunk.js.map",
     "runtime-main.js": "/pokedex_e-Xperience_2020_ver1/static/js/runtime-main.82915736.js",
     "runtime-main.js.map": "/pokedex_e-Xperience_2020_ver1/static/js/runtime-main.82915736.js.map",
-    "static/js/2.d6683a43.chunk.js": "/pokedex_e-Xperience_2020_ver1/static/js/2.d6683a43.chunk.js",
-    "static/js/2.d6683a43.chunk.js.map": "/pokedex_e-Xperience_2020_ver1/static/js/2.d6683a43.chunk.js.map",
+    "static/js/2.c08ba96d.chunk.js": "/pokedex_e-Xperience_2020_ver1/static/js/2.c08ba96d.chunk.js",
+    "static/js/2.c08ba96d.chunk.js.map": "/pokedex_e-Xperience_2020_ver1/static/js/2.c08ba96d.chunk.js.map",
     "index.html": "/pokedex_e-Xperience_2020_ver1/index.html",
-    "precache-manifest.f7e90e9e2a8afb8e71d2a95ef2030864.js": "/pokedex_e-Xperience_2020_ver1/precache-manifest.f7e90e9e2a8afb8e71d2a95ef2030864.js",
+    "precache-manifest.03f60e9c80baba8075bc13daf354767f.js": "/pokedex_e-Xperience_2020_ver1/precache-manifest.03f60e9c80baba8075bc13daf354767f.js",
     "service-worker.js": "/pokedex_e-Xperience_2020_ver1/service-worker.js",
-    "static/css/main.3c25ad0b.chunk.css.map": "/pokedex_e-Xperience_2020_ver1/static/css/main.3c25ad0b.chunk.css.map",
-    "static/js/2.d6683a43.chunk.js.LICENSE.txt": "/pokedex_e-Xperience_2020_ver1/static/js/2.d6683a43.chunk.js.LICENSE.txt"
+    "static/css/main.eefcbc83.chunk.css.map": "/pokedex_e-Xperience_2020_ver1/static/css/main.eefcbc83.chunk.css.map",
+    "static/js/2.c08ba96d.chunk.js.LICENSE.txt": "/pokedex_e-Xperience_2020_ver1/static/js/2.c08ba96d.chunk.js.LICENSE.txt",
+    "static/media/nodata.png": "/pokedex_e-Xperience_2020_ver1/static/media/nodata.acf81815.png",
+    "static/media/pikaPokemon.png": "/pokedex_e-Xperience_2020_ver1/static/media/pikaPokemon.9672f4f4.png"
   },
   "entrypoints": [
     "static/js/runtime-main.82915736.js",
-    "static/js/2.d6683a43.chunk.js",
-    "static/css/main.3c25ad0b.chunk.css",
-    "static/js/main.ecc6e683.chunk.js"
+    "static/js/2.c08ba96d.chunk.js",
+    "static/css/main.eefcbc83.chunk.css",
+    "static/js/main.49d928ba.chunk.js"
   ]
 }
