@@ -17,10 +17,10 @@ const Navbar = (props) => {
     <div className="Navbar">
       <div className="pokemon__logo">
         <img className="pokemon__logo-img" src={pokeLogo} alt="pokemon_logo" />
-        <div className="pokemon__logo-name">Show me Pokemon!</div>
         <div className="icon" onClick={(e) => handleClickHome(e)}>
           <FaHome />
         </div>
+        <div className="pokemon__logo-name">Show me Pokemon!</div>
       </div>
       <div className="navbar__menu">
         <SearchGenderForm handleGenderSearch={handleGenderSearch} />
