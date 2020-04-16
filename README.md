@@ -4,7 +4,7 @@ In the project directory, please run: `npm start` or just click link: https://mi
 
 This project is my first work made completely with React JS library, thus it needs some improvements. Unfortunately I did not managed to fix them. 
 Here is the short list of main issues: 
-- While searching by gender, when you want to click next page or any other page you want, you have do it twice. It's because there is a problem with contolling hook state - ot does not update immediately. 
+- While searching by gender, when you want to click next page or any other page you want, you have do it twice. It's because there is a problem with contolling hook state - it does not update immediately. 
 - Function handleGenderSearch needs to be rebuilt.
 - Advanced Pagination should be improoved - to big, especially in mobile versions. 
 - Some more issues i did not notice.
