@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/pokedex_e-Xperience_2020_ver1/precache-manifest.03f60e9c80baba8075bc13daf354767f.js"
+  "/pokedex_e-Xperience_2020_ver1/precache-manifest.1aa098b863405a6d51b72976293ae5a2.js"
 );
 
 self.addEventListener('message', (event) => {
